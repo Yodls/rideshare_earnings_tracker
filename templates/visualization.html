@@ -1,0 +1,470 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            color: #2c3e50;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* General Styles */
+        .container {
+            padding: 0 0px;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 2000px;
+        }
+        .card-header {
+            background-color: #343a40;
+            color: #ecf0f1;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .card-body {
+            color: #2c3e50;
+            font-size: 0.2rem !important;
+        }
+        .card-title {
+            font-size: 0.7rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Table Styles */
+        thead th {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            border-color: #444;
+        }
+        tbody tr {
+            background-color: #ffffff;
+            border-color: #444;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        table tr, table td, table th {
+            color: #2c3e50 !important;
+        }
+
+        /* List Group Styles */
+        .list-group-item {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            border-color: #444;
+        }
+
+        /* Button Styles */
+        .btn-dark-mode {
+            background-color: #ecf0f1;
+            border: 1px solid #2c3e50;
+            color: #2c3e50;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+        .btn-dark-mode:hover {
+            background-color: #d1d1d1;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header, .modal-footer {
+            background-color: #ecf0f1;
+            flex-shrink: 0;
+        }
+        .modal-body {
+            background-color: #f7f7f7;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1; /* Add this to allow body to take available space */
+        }
+        .modal-content-daily {
+            background-color: #ffffff;
+            height: auto;
+            width: auto;
+            max-width: 100%; /* Adjust as needed */
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        .modal-dialog {
+            max-width: 75%; /* Adjust as needed */
+        }
+        .modal-body-daily {
+            height: 65vh; /* Adjust as needed */
+            width: 100%; /* Adjust as needed */
+        }
+        .modal-body-daily iframe {
+            width: 100%; /* Adjust as needed */
+            height: 100%; /* Adjust as needed */
+            border: 0; /* Remove iframe border */
+        }
+        .modal-body-weekly {
+            height: 50vh; /* Adjust this value as needed */
+        }
+        .modal-body-monthly {
+            height: 48vh; /* Adjust this value as needed */
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #343a40;
+            text-align: center;
+            padding: 5px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .footer p {
+            color: #ffffff;
+            margin: 0;
+            padding-top: 2px;
+        }
+
+        /* Utility and Miscellaneous Styles */
+        .button-row, .button2-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+        .visualization-images, .custom-visualization-images {
+            padding: 16px;
+        }
+        .plot-img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .custom-row {
+        margin-bottom: 0rem; /* Adjust as necessary */
+        }
+    
+        .custom-col {
+        margin-bottom: 0rem; /* Adjust as necessary */
+        }
+        .rotate-45 {
+        transform: rotate(45deg);
+        }
+        .rotate-45-negative {
+        transform: rotate(-45deg);
+        }
+        .interactive-header {
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        }
+
+        .interactive-header:hover {
+        background-color: #495057; /* Darker shade for hover effect */
+        }
+
+        .interactive-header:after {
+        content: ' \2193'; /* Downward arrow icon */
+        font-size: 1rem;
+        transition: transform 0.3s ease;
+        }
+
+        .interactive-header[aria-expanded="true"]:after {
+        transform: rotate(180deg); /* Rotate the arrow on expand */
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+
+                <!-- Button Row for Plot Modals -->
+<div class="row mb-4 button-row">
+    <div class="text-center">
+        <button type="button" class="btn btn-dark-mode" data-toggle="modal" data-target="#dashModal">
+            Daily Plotly 
+            {% if overall_trend == 'Trend: Increasing' %}
+                <i class="fas fa-arrow-up text-success rotate-45"></i>
+            {% else %}
+                <i class="fas fa-arrow-down text-danger rotate-45-negative"></i>
+            {% endif %}
+        </button>
+    </div>
+    <div class="text-center">
+        <button type="button" class="btn btn-dark-mode" data-toggle="modal" data-target="#dashModal2">Weekly Plotly</button>
+    </div>
+    <div class="text-center">
+        <button type="button" class="btn btn-dark-mode" data-toggle="modal" data-target="#dashModal3">Monthly Plotly</button>
+    </div>
+</div>
+    
+
+    <!-- Metrics Display Section -->
+    <div class="row custom-row">
+        <!-- Per Hour Avgs. -->
+        <div class="col-md-4 col-sm-6 custom-col">
+            <div class="card border-primary">
+                <div class="card-header">Per Hour Avgs.</div>
+                <div class="card-body">
+                    <h4 class="card-title">Ten Days(+GA): <i>${{ Per_Hour_d }}</i></h4>
+                    <h4 class="card-title">Thirty Days(+GA+I): <i>${{ Per_Hour_w }}</i></h4>
+                    <h4 class="card-title">All Time(+GA+I+E): <i>${{ Per_Hour_m }}</i></h4>
+                </div>
+            </div>
+        </div>
+        <!-- Per Mile Avgs. -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card border-secondary">
+                <div class="card-header">Per Mile Avgs.</div>
+                <div class="card-body">
+                    <h4 class="card-title">Ten Days(+GA): <i>${{ per_mile_d }}</i></h4>
+                    <h4 class="card-title">Thirty Days(+GA+I): <i>${{ Per_mile_w }}</i></h4>
+                    <h4 class="card-title">All Time(+GA+I+E): <i>${{ Per_mile_m }}</i></h4>
+                </div>
+            </div>
+        </div>
+        <!-- Take Home Pay Avgs. -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card border-success">
+                <div class="card-header">Take Home Pay Avgs.</div>
+                <div class="card-body">
+                    <h4 class="card-title">Single Day Pay(-10)(+GA): <i>${{ real_take_home_d }}</i></h4>
+                    <h4 class="card-title">Single Week Pay(-30)(+GA+I): <i>${{ real_take_home_w }}</i></h4>
+                    <h4 class="card-title">Single Month Pay(All)(+GA+I+E): <i>${{ real_take_home_m }}</i></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row custom-row">
+        <!-- Miles Driven Avgs. -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card border-danger">
+                <div class="card-header">Miles Driven Avgs.</div>
+                <div class="card-body">
+                    <h4 class="card-title">Daily Driven (past 10): <i>{{ miles_d }} mi/day</i></h4>
+                    <h4 class="card-title">Weekly Driven (past 30): <i>{{ miles_w }} mi/week</i></h4>
+                    <h4 class="card-title">Monthly Driven (all time): <i>{{ miles_m }} mi/month</i></h4>
+                </div>
+            </div>
+        </div>
+        <!-- Hours Worked Avgs. -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card border-warning">
+                <div class="card-header">Hours Worked Avgs.</div>
+                <div class="card-body">
+                    <h4 class="card-title">Daily Worked (past 10): <i>{{ hours_d }} hrs/day</i></h4>
+                    <h4 class="card-title">Weekly Worked (past 30): <i>{{ hours_w }} hrs/week</i></h4>
+                    <h4 class="card-title">Monthly Worked (all time): <i>{{ hours_m2 }} hrs/week</i></h4>
+                </div>
+            </div>
+        </div>
+        <!-- Gas Price Avgs. -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card border-info">
+                <div class="card-header">Gas Price Avgs.</div>
+                <div class="card-body">
+                    <h4 class="card-title">Past 10: <i>${{ GA_d }}, or ${{ GAV_d }}/day</i></h4>
+                    <h4 class="card-title">Past 30: <i>${{ GA_w }}, or ${{ GAV_w }}/week</i></h4>
+                    <h4 class="card-title">All Time: <i>${{ GA_m }}, or ${{ GAV_m }}/month</i></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Forecast Data -->
+<div class="row custom-row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header interactive-header" data-toggle="collapse" data-target="#forecastCollapse" aria-expanded="false" style="cursor: pointer;">
+                7-Day Forecast
+            </div>
+            <div class="collapse" id="forecastCollapse">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Day of Week</th>
+                            <th>Predicted Value</th>
+                            <th>Lower Bound</th>
+                            <th>Upper Bound</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for forecast in forecast_list %}
+                        <tr>
+                            <td>{{ forecast.date }}</td>
+                            <td>{{ forecast.day_of_week }}</td>
+                            <td>{{ forecast.predicted_value }}</td>
+                            <td>{{ forecast.lower_bound }}</td>
+                            <td>{{ forecast.upper_bound }}</td>
+                            <td>{{ forecast.confidence_percentage }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Trend Cards Section -->
+    <div class="row custom-row">
+        <!-- All Trends in a Single Card -->
+        <div class="col-12 mb-2 d-flex justify-content-center">
+            <div class="card custom-card border-primary" style="width: 100%;">
+                <div class="card-header interactive-header custom-card-header" data-toggle="collapse" data-target="#trendsCollapse" aria-expanded="false" style="cursor: pointer;">
+                    Trends Overview
+                </div>
+                <div class="collapse" id="trendsCollapse">
+                    <div class="card-body">
+                            <div class="row">
+                                <!-- Earnings Trend -->
+                                <div class="col-md-6">
+                                    <div class="card custom-card border-primary">
+                                        <div class="card-header custom-card-header">
+                                            Earnings
+                                        </div>
+                                        <div class="visualization-images custom-visualization-images d-flex flex-wrap justify-content-center">
+                                            {% for image in takeHome %}
+                                            <img class="plot-img mb-4" src="data:image/png;base64,{{image}}" alt="Error-Loading-Monthly-Plot" style="width: 100%; height: auto;">
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hourly Rate Trend -->
+                                <div class="col-md-6">
+                                    <div class="card custom-card border-primary">
+                                        <div class="card-header custom-card-header">
+                                            Hourly Rate
+                                        </div>
+                                        <div class="visualization-images custom-visualization-images d-flex flex-wrap justify-content-center">
+                                            {% for image in hourly %}
+                                            <img class="plot-img mb-4" src="data:image/png;base64,{{image}}" alt="Error-Loading-Hourly-Plot" style="width: 100%; height: auto;">
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Per Mile Rate Trend -->
+                                <div class="col-md-6">
+                                    <div class="card custom-card border-primary">
+                                        <div class="card-header custom-card-header">
+                                            per Mile Rate
+                                        </div>
+                                        <div class="visualization-images custom-visualization-images d-flex flex-wrap justify-content-center">
+                                            {% for image in miles %}
+                                            <img class="plot-img mb-4" src="data:image/png;base64,{{image}}" alt="Error-Loading-Mile-Rate-Plot" style="width: 100%; height: auto;">
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hours Worked Trend -->
+                                <div class="col-md-6">
+                                    <div class="card custom-card border-primary">
+                                        <div class="card-header custom-card-header">
+                                            Hours Worked
+                                        </div>
+                                        <div class="visualization-images custom-visualization-images d-flex flex-wrap justify-content-center">
+                                            {% for image in hours %}
+                                            <img class="plot-img mb-4" src="data:image/png;base64,{{image}}" alt="Error-Loading-Hours-Worked-Plot" style="width: 100%; height: auto;">
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade wide-modal" id="dashModal" tabindex="-1" role="dialog" aria-labelledby="dashModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content modal-content-daily">
+            <div class="modal-header">
+              <h5 class="modal-title" id="dashModalLabel" style="color: black;">Daily Plotly</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!-- Daily Modal -->
+            <div class="modal-body modal-body-daily">
+              <iframe src="/dailyPlot/" width="100%" height="100%"></iframe>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="modal fade wide-modal" id="dashModal2" tabindex="-1" role="dialog" aria-labelledby="dashModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dashModalLabel" style="color: black;">Weekly Plotly</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Weekly Modal -->
+                <div class="modal-body modal-body-weekly">
+                    <iframe src="/weeklyPlot/" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade wide-modal" id="dashModal3" tabindex="-1" role="dialog" aria-labelledby="dashModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dashModalLabel" style="color: black;">Monthly Plotly</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Monthly Modal -->
+                <div class="modal-body modal-body-monthly">
+                    <iframe src="/monthlyPlot/" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Footer -->
+    <div class="footer"><p>© 2023 YodlsCo. All rights reserved.</p></div>
+
+</body>
+
+</html>
+
+{% endblock %}

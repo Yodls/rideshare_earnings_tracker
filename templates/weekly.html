@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Responsive styles for mobile-first design */
+    form {
+        width: 90%;
+        max-width: 250px;
+        margin: 2rem auto;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        background-color: #f7f7f7;
+        font-size: 14px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        text-align: center; /* Center the labels */
+    }
+
+    input[type="text"] {
+        width: 100%; 
+        padding: 0.5rem;
+        margin: 0 auto; /* Center the input bars horizontally */
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.3rem;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        padding: 0.6rem;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+</style>
+
+{% if data is defined %}
+    <div style="border: 1px solid #ccc; border-radius: 0.5rem; padding: 1rem; margin: 1rem auto; max-width: 350px; background-color: #f7f7f7; display: flex; flex-direction: column; align-items: center;">
+        <h2 style="margin-bottom: 1rem;">Summary</h2>
+        <p><strong>Per Mile Rate: $</strong>{{ data.THTM }}</p>
+        <p><strong>Per Hour Rate: $</strong>{{ data.THH }}</p>
+        <p><strong>Take-Home Earnings: $</strong>{{ data.TH }}</p>
+    </div>
+{% endif %}
+
+<form method="POST" action="{{ url_for('weekly') }}">
+    <label for="week_number">Week Number Of Data Entry:</label>
+    <input type="text" name="week_number" id="week_number" required>
+
+    <label for="my_reference">Week Reference:</label>
+    <input type="text" name="my_reference" id="my_reference" required>
+
+    <label for="start_date">Week Start Date (yyyy-mm-dd):</label>
+    <input type="text" name="start_date" id="start_date" required>
+
+    <label for="end_date">End Date (yyyy-mm-dd):</label>
+    <input type="text" name="end_date" id="end_date" required>
+
+    <label for="Insurance">Days Worked:</label>
+    <input type="text" name="Insurance" id="Insurance" required>
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

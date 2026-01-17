@@ -1,0 +1,151 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.main-navbar {
+    background-color: #333;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .15);
+    padding: 0.5rem 1rem;
+    position: fixed; 
+    top: 0; 
+    width: 100%; 
+    z-index: 1000; 
+}
+
+.main-navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%; /* Adjust width as necessary */
+    height: 2px; /* Adjust height as necessary */
+    background: linear-gradient(to right, rgba(52, 58, 64, 0), #343a40, rgba(52, 58, 64, 0));
+}
+
+.main-navbar-brand {
+    font-size: 1.8em;
+    color: #ecf0f1 !important;
+}
+
+.main-nav-link {
+    color: #ecf0f1 !important;
+    transition: color 0.3s, background-color 0.3s; 
+    padding: 0.5rem 1rem; 
+}
+
+.main-nav-link:hover {
+    color: #3498db !important; 
+    background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.main-nav-tabs {
+    border-bottom: none;
+}
+
+.main-navbar-toggler {
+    border: none;
+}
+
+.main-navbar-toggler:focus {
+    outline: none;
+}
+
+.main-card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1); 
+    transition: transform 0.3s, box-shadow 0.3s; 
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 300px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.main-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.15); 
+    transform: translateY(-5px); 
+}
+
+.main-card-title, .report-title, .main-title {
+    color: #2c3e50; 
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.main-card-content {
+    color: #7f8c8d; 
+}
+.main-navbar-line {
+    position: absolute;
+    top: 55px; /* Adjust based on the height of your navbar */
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, rgba(52, 58, 64, 0), #343a40, rgba(52, 58, 64, 0));
+    transform: translateX(-50%);
+    z-index: 999; /* to ensure it appears below the navbar */
+}
+
+.main-plot-img, .iframe-card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+.iframe-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+    width: 90%;
+    max-height: 650px;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.iframe-card iframe {
+    max-height: 450px;
+    width: 100%;
+    border: none;
+}
+
+@media (max-width: 600px) {
+    .main-navbar-nav {
+        text-align: center;
+    }
+
+    .main-nav-item {
+        display: block;
+        width: 100%;
+    }
+
+    .main-navbar-brand {
+        text-align: left;
+    }
+
+    .main-nav-link {
+        padding: .5rem 1rem;
+    }
+
+    .view-section {
+        display: none;
+    }
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #343a40;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.footer p {
+    color: #ffffff;
+    margin: 0;
+}

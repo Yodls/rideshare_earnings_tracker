@@ -1,0 +1,84 @@
+<!-- monthly.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    form {
+        width: 90%;
+        max-width: 250px;
+        margin: 2rem auto;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        background-color: #f7f7f7;
+        font-size: 14px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        text-align: center; /* Center the labels */
+    }
+
+    input[type="text"] {
+        width: 100%; 
+        padding: 0.5rem;
+        margin: 0 auto; /* Center the input bars horizontally */
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.3rem;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        padding: 0.6rem;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+</style>
+
+{% if data is defined %}
+    <div style="border: 1px solid #ccc; border-radius: 0.5rem; padding: 1rem; margin: 1rem auto; max-width: 350px; background-color: #f7f7f7; display: flex; flex-direction: column; align-items: center;">
+        <h2 style="margin-bottom: 1rem;">Summary</h2>
+        <p><strong>Per Mile Rate: $</strong>{{ data.THTM }}</p>
+        <p><strong>Per Hour Rate: $</strong>{{ data.THH }}</p>
+        <p><strong>Take-Home Earnings: $</strong>{{ data.TH }}</p>
+        <p><strong>Total Miles: </strong>{{ data.TM }}
+        <p><strong>Total Hours: </strong>{{ data.H }}</p>
+    </div>
+{% endif %}
+
+
+<form method="POST" action="{{ url_for('monthly') }}">
+    <label for="prompt_date">Month Number:</label>
+    <input type="text" name="prompt_date" id="prompt_date" required>
+
+    <label for="my_reference">Month Reference:</label>
+    <input type="text" name="my_reference" id="my_reference" required>
+
+    <label for="Expenses">Total Month's Expenses:</label>
+    <input type="text" name="Expenses" id="Expenses" required>
+
+    <label for="start_week_number">Starting Week Number:</label>
+    <input type="text" name="start_week_number" id="start_week_number" required>
+
+    <label for="end_week_number">Ending Week Number:</label>
+    <input type="text" name="end_week_number" id="end_week_number" required>      
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

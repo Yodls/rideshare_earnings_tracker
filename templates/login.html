@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login and Registration</title>
+    <link rel="icon" href="{{ url_for('static', filename='48x48.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='64x64.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='152x152.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='180x180.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='192x192.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='196x196.ico') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 500px; /* Adjust to your desired width */
+        }
+        .box {
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            background-color: white;
+        }
+        #show-registration, #show-login {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div class="box login-form">
+            <h2 class="text-center">Login</h2>
+            <form action="/" method="POST" class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                <label for="pin">Password:</label>
+                <input type="password" id="pin" name="pin" class="form-control" placeholder="Password" required>
+                <button class="btn btn-primary mt-3" type="submit">Sign in</button>
+                <p class="text-center text-muted mt-3" id="show-registration">Register</p>
+            </form>
+        </div>
+        <!-- Registration Form (Hidden by default) -->
+        <div class="box registration-form" style="display: none;">
+            <h2 class="text-center">User Registration</h2>
+            <form action="/register" method="POST" class="form-group">
+                <label for="reg-username">Username:</label>
+                <input type="text" id="reg-username" name="username" class="form-control" placeholder="Username" required>
+                <label for="reg-password">Password:</label>
+                <input type="password" id="reg-password" name="password" class="form-control" placeholder="Password" required>
+                <button class="btn btn-primary mt-3" type="submit">Register</button>
+                <p class="text-center text-muted mt-3" id="show-login">Back to Login</p>
+            </form>
+        </div>
+    </div>
+    <script>
+        // Toggle between login and registration forms when buttons are clicked
+        document.getElementById("show-registration").addEventListener("click", function () {
+            document.querySelector(".login-form").style.display = "none";
+            document.querySelector(".registration-form").style.display = "block";
+        });
+        document.getElementById("show-login").addEventListener("click", function () {
+            document.querySelector(".registration-form").style.display = "none";
+            document.querySelector(".login-form").style.display = "block";
+        });
+    </script>
+</body>
+</html>

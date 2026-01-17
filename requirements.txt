@@ -1,0 +1,10 @@
+Flask
+Flask-Login
+Celery
+Flask-Caching
+Werkzeug
+psycopg2-binary
+dash
+dash-bootstrap-components
+plotly
+pandas
